@@ -1,4 +1,4 @@
-package com.br.spellsoft.lojavirtual;
+package com.br.spellsoft.Activity;
 
 import android.app.Activity;
 import android.os.Bundle;

@@ -3,4 +3,10 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_login">Logar no sistema</string>
+
+    /*------------Tela de Login---------------------*/
+    <string name="lbl_Login">Login</string>
+    <string name="lbl_Senha">Senha</string>
+    <string name="btn_Logar">Logar</string>
 </resources>
