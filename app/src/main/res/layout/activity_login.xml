@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/txt_Login"
         android:inputType="text"
-        style="@style/txtLogin"/>
+        />
 
     <TextView
         android:text="@string/lbl_Senha"
@@ -38,14 +38,14 @@
         android:layout_height="wrap_content"
         android:id="@+id/txt_Senha"
         android:inputType="textPassword"
-        style="@style/txtLogin"/>
+        />
 
  <Button
      android:layout_width="match_parent"
      android:layout_height="wrap_content"
      android:id="@+id/btn_logar"
      android:text="@string/btn_Logar"
-     style="@style/btnLogin" />
+      />
 
 </LinearLayout>
 </ScrollView>
