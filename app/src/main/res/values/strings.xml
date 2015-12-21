@@ -9,4 +9,6 @@
     <string name="lbl_Login">Login</string>
     <string name="lbl_Senha">Senha</string>
     <string name="btn_Logar">Logar</string>
+    /*------------Tela de Menu---------------------*/
+    <string name="lbl_Sair">Sair</string>
 </resources>
