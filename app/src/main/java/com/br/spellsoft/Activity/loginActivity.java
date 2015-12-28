@@ -9,12 +9,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
+import com.br.spellsoft.BO.LoginBO;
+
 public class loginActivity extends Activity {
 
     private EditText txtLogin,txtSenha;
     private Button btnLogar;
     private SharedPreferences preferences;
-
+   private  LoginBO loginBO;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,7 +26,7 @@ public class loginActivity extends Activity {
 
         startarComPreferences();
         mapearControles();
-
+        loginBO = new LoginBO(this);
         btnLogarClick();
     }
 
@@ -45,7 +48,7 @@ public class loginActivity extends Activity {
 
                 String login = txtLogin.getText().toString();
                 String senha = txtSenha.getText().toString();
-                if(! com.br.spellsoft.BO.LoginBO.validaCampoLogin(login, senha)){
+                if(!LoginBO.validaCampoLogin(login, senha)){
                     txtLogin.setError("Campo obrigatório");
                     txtSenha.setError("Campo obrigatório");
                 }

@@ -1,12 +1,21 @@
 package com.br.spellsoft.BO;
 
+import android.app.Activity;
 import android.content.SharedPreferences;
+
+import com.br.spellsoft.Repository.LoginRepository;
 
 /**
  * Created by mike on 21/12/15.
  */
 public class LoginBO  {
 
+    private LoginRepository loginRepository;
+
+    public LoginBO(Activity activity){
+        loginRepository = new LoginRepository(activity);
+        loginRepository.PopularDB();
+    }
     public static boolean validaCampoLogin(String login,String senha){
         return login == "" || "".equals(login) ? false : senha == "" || "".equals(senha)? false :true;
     }
