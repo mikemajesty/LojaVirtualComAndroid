@@ -53,7 +53,7 @@ public class loginActivity extends Activity {
                     txtSenha.setError("Campo obrigatório");
                 }
                 else{
-                    if ( com.br.spellsoft.BO.LoginBO.existeLogin(login, senha, preferences)) {
+                    if (new LoginBO(loginActivity.this).existeLogin(login, senha, preferences)) {
                         startActivity(new Intent(loginActivity.this, MainActivity.class));
                         finish();
                     }

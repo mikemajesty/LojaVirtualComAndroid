@@ -1,6 +1,7 @@
 package com.br.spellsoft.Repository;
 
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -53,5 +54,23 @@ public class LoginRepository extends SQLiteOpenHelper {
                     Toast.makeText(activity, message,Toast.LENGTH_LONG ).show();
 
         }
+    }
+    public Boolean CadastrarLogin(String login,String senha){
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues content = new ContentValues();
+        content.put("USUARIO",login);
+        content.put("SENHA", senha);
+        return db.insert("TB_LOGIN",null,content) > 0 ? true : false;
+    }
+    public  Boolean AtualizarLogin(String login,String senha){
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues content = new ContentValues();
+        content.put("USUARIO",login);
+        content.put("SENHA", senha);
+        return db.update("TB_LOGIN", content, "ID_LOGIN > 1", null) > 0 ? true : false;
+    }
+    public  Boolean Deletar(){
+        SQLiteDatabase db = getWritableDatabase();
+        return db.delete("TB_LOGIN","ID_LOGIN > 1",null) > 0 ? true: false;
     }
 }
