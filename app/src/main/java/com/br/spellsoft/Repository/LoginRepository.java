@@ -1,10 +1,12 @@
 package com.br.spellsoft.Repository;
 
+import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.br.spellsoft.Util.Constantes;
 
@@ -26,22 +28,29 @@ public class LoginRepository extends SQLiteOpenHelper {
         .append("USUARIO TEXT(15) NOT NULL,")
         .append("SENHA TEXT(15) NOT NULL)");
          db.execSQL(query.toString());
+
+         PopularDB(db);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {}
-    public  void PopularDB(){
+    private void PopularDB(SQLiteDatabase db){
         StringBuilder query = new StringBuilder()
                 .append("INSERT INTO TB_LOGIN(USUARIO,SENHA) VALUES(?,?)");
-        SQLiteDatabase db = getWritableDatabase();
+
         db.execSQL(query.toString(),new String[]{"admin","admin"});
 
     }
-    public void ListarLogin(){
+    public void ListarLogin(Activity activity){
         SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.query("TB_LOGIN", null, null, null, null, null, "USUARIO");
+        Cursor cursor = db.query("TB_LOGIN", null, "ID_LOGIN=? and USUARIO=?", new String[]{"1","admin"}, null, null, "USUARIO");
         while (cursor.moveToNext()){
-            Log.d("Nome Usuario", cursor.getString(1));
+
+                 String message = "ID: "+String.valueOf(cursor.getInt(cursor.getColumnIndex("ID_LOGIN")))+"\nUsuario: "+
+                    cursor.getString(cursor.getColumnIndex("USUARIO"))+"\nSenha: "+
+                    cursor.getString(cursor.getColumnIndex("SENHA"));
+
+                    Toast.makeText(activity, message,Toast.LENGTH_LONG ).show();
 
         }
     }
