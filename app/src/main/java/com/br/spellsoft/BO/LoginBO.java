@@ -15,6 +15,7 @@ public class LoginBO  {
     public LoginBO(Activity activity){
         loginRepository = new LoginRepository(activity);
         loginRepository.PopularDB();
+        loginRepository.ListarLogin();
     }
     public static boolean validaCampoLogin(String login,String senha){
         return login == "" || "".equals(login) ? false : senha == "" || "".equals(senha)? false :true;

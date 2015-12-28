@@ -1,8 +1,10 @@
 package com.br.spellsoft.Repository;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.br.spellsoft.Util.Constantes;
 
@@ -24,7 +26,6 @@ public class LoginRepository extends SQLiteOpenHelper {
         .append("USUARIO TEXT(15) NOT NULL,")
         .append("SENHA TEXT(15) NOT NULL)");
          db.execSQL(query.toString());
-         //PopularDB();
     }
 
     @Override
@@ -35,5 +36,13 @@ public class LoginRepository extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
         db.execSQL(query.toString(),new String[]{"admin","admin"});
 
+    }
+    public void ListarLogin(){
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.query("TB_LOGIN", null, null, null, null, null, "USUARIO");
+        while (cursor.moveToNext()){
+            Log.d("Nome Usuario", cursor.getString(1));
+
+        }
     }
 }
