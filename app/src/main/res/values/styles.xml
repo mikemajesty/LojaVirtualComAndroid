@@ -26,5 +26,11 @@
         <item name="android:background">@color/gray</item>
 
     </style>
+    <style name="controlePadding">
+        <item name="android:layout_marginTop">15dp</item>
+        <item name="android:layout_marginBottom">15dp</item>
+
+
+    </style>
 
 </resources>
