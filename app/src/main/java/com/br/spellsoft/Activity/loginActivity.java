@@ -36,7 +36,7 @@ public class loginActivity extends Activity {
         String senha = preferences.getString("senha",null);
 
         if ( login != null && senha != null   ){
-            startActivity(new Intent(loginActivity.this, MainActivity.class));
+            startActivity(new Intent(loginActivity.this, PessoaActivity.class));
             finish();
         }
     }
@@ -54,7 +54,7 @@ public class loginActivity extends Activity {
                 }
                 else{
                     if (new LoginBO(loginActivity.this).existeLogin(login, senha, preferences)) {
-                        startActivity(new Intent(loginActivity.this, MainActivity.class));
+                        startActivity(new Intent(loginActivity.this, PessoaActivity.class));
                         finish();
                     }
                     else {

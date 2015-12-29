@@ -11,4 +11,5 @@
     <string name="btn_Logar">Logar</string>
     /*------------Tela de Menu---------------------*/
     <string name="lbl_Sair">Sair</string>
+    <string name="title_activity_pessoa">Pessoa Activity</string>
 </resources>

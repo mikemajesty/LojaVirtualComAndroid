@@ -10,18 +10,20 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name" >
-
         </activity>
         <activity
-
-            android:theme="@android:style/Theme.Holo.Light"
             android:name=".loginActivity"
-            android:label="@string/title_activity_login" >
+            android:label="@string/title_activity_login"
+            android:theme="@android:style/Theme.Holo.Light" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".PessoaActivity"
+            android:label="@string/title_activity_pessoa" >
         </activity>
     </application>
 
