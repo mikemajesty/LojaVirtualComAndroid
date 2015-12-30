@@ -106,6 +106,14 @@
             android:layout_height="wrap_content"
             android:id="@+id/btnEnviar"
             android:text="Enviar"/>
+
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnDataNasc"
+            android:text="Data Nasc"
+            android:onClick="setData"/>
     </LinearLayout>
 
 
