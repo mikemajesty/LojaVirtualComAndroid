@@ -2,7 +2,6 @@ package com.br.spellsoft.Activity;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.os.Bundle;
 import android.text.TextWatcher;
 import android.view.Menu;
@@ -14,9 +13,11 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.br.spellsoft.Entidades.Profissoes;
+import com.br.spellsoft.Repository.DatePickerFragmant;
 import com.br.spellsoft.Util.Mask;
 
 import java.util.ArrayList;
@@ -25,22 +26,24 @@ import java.util.Calendar;
 public class PessoaActivity extends Activity {
 
     private Spinner spinnerProfissao;
-    private EditText txtCpf;
+    private EditText txtCpf,txtDataNasc;
     private RadioGroup rdgCpfCnpj;
     private RadioButton rdbCpf;
     private TextWatcher cpfMask,cnpjMask;
     private int cpfCnpjSelecionado;
+    private TextView lblCpfCnpj;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pessoa);
         spinnerProfissao = (Spinner)findViewById(R.id.spnProfissao);
         txtCpf = (EditText) findViewById(R.id.txtCpfCnpj);
+        txtDataNasc = (EditText) findViewById(R.id.txtDataNasc);
         rdgCpfCnpj = (RadioGroup) findViewById(R.id.rdgCpfCnpj);
         rdbCpf = (RadioButton) findViewById(R.id.rdbCpf);
         cpfMask = Mask.insert("###.###.###-##",txtCpf);
         txtCpf.addTextChangedListener(cpfMask);
-
+        lblCpfCnpj = (TextView) findViewById(R.id.lblCpfCnpj);
         cnpjMask = Mask.insert("##.###.###/####-##",txtCpf );
         //txtCpf.addTextChangedListener(cpfMask);
 
@@ -53,28 +56,30 @@ public class PessoaActivity extends Activity {
                     txtCpf.addTextChangedListener(cpfMask);
                     txtCpf.setText("");
                     txtCpf.requestFocus();
+                    lblCpfCnpj.setText("CPF:");
                 }
                 else{
                     txtCpf.removeTextChangedListener(cpfMask);
                     txtCpf.addTextChangedListener(cnpjMask);
                     txtCpf.setText("");
                     txtCpf.requestFocus();
+                    lblCpfCnpj.setText("CNPJ:");
+                }
                 }
             }
-        });
+        );
 
         this.IniciaProfissao();
 
         txtCpf.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean b) {
-                if (rdgCpfCnpj.getCheckedRadioButtonId() == rdbCpf.getId()){
-                   if( txtCpf.getText().length() < 14){
-                       txtCpf.setText("");
-                   }
-                }
-                else {
-                    if (txtCpf.getText().length() < 18){
+                if (rdgCpfCnpj.getCheckedRadioButtonId() == rdbCpf.getId()) {
+                    if (txtCpf.getText().length() < 14) {
+                        txtCpf.setText("");
+                    }
+                } else {
+                    if (txtCpf.getText().length() < 18) {
                         txtCpf.setText("");
 
                     }
@@ -94,21 +99,23 @@ public class PessoaActivity extends Activity {
     }
 
     public  void setData(View v){
-        showDialog(999);
+        DatePickerFragmant datePickerFragmant = new DatePickerFragmant();
+        Bundle bundle  = new Bundle();
+        Calendar c = Calendar.getInstance();
+        bundle.putInt("Mia",c.get(Calendar.DAY_OF_MONTH));
+        bundle.putInt("Mes",c.get(Calendar.MONTH));
+        bundle.putInt("Ano",c.get(Calendar.YEAR));
+        datePickerFragmant.setArguments(bundle);
+        datePickerFragmant.setDateListiner(dateListener);
+        datePickerFragmant.show(getFragmentManager(),"Data Nasc");
     }
 
-    @Override
-    protected Dialog onCreateDialog(int id) {
-        if (id == 999){
-            Calendar c = Calendar.getInstance();
-            return new DatePickerDialog(this, dateListener, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
-        }
-        return null;
-    }
+
     private DatePickerDialog.OnDateSetListener dateListener = new DatePickerDialog.OnDateSetListener() {
         @Override
         public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-            Toast.makeText(PessoaActivity.this,"Ano "+i+",Mês,"+(i1+1) +",Dia "+i2,Toast.LENGTH_LONG).show();
+            txtDataNasc.setText(i+"/"+(i1+1)+"/"+i2);
+
         }
 
     };
