@@ -6,7 +6,7 @@ package com.br.spellsoft.Entidades;
 public enum Profissoes {
 
     PROGRAMADOR("Arquiteto de software"),
-    ANALISTA("Pedreiro"),
+    ANALISTA("Analista"),
     ENGENHEIRO("Engenheiro de software"),
     ARQUITETO("Arquiteto de software"),
     CARTEIRO("Carteiro");
@@ -16,6 +16,15 @@ public enum Profissoes {
         return descricao;
     }
 
+        public static Profissoes GetProfissao(int posicao)
+        {
+            for (Profissoes p: Profissoes.values()){
+                if (p.ordinal() == posicao){
+                    return p;
+                }
+            }
+            return null;
+        }
 
     private Profissoes(String descricao){
         this.descricao = descricao;

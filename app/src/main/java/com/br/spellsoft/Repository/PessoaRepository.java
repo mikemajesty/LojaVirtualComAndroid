@@ -20,7 +20,7 @@ public class PessoaRepository extends SQLiteOpenHelper {
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase db, int i, int i1) {
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         StringBuilder query = new StringBuilder()
                 .append("CREATE TABLE TB_PESSOA")
                 .append("(ID_PESSOA INTEGER PRIMARY KEY AUTOINCREMENT,")

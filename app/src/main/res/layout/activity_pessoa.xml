@@ -101,11 +101,7 @@
 
         </Spinner>
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/btnEnviar"
-            android:text="Enviar"/>
+
 
         <LinearLayout
             android:orientation="horizontal"
@@ -132,7 +128,12 @@
 
         </LinearLayout>
 
-
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnEnviar"
+            android:text="Enviar"
+            android:onClick="btnEnviar_Click"/>
     </LinearLayout>
 
 

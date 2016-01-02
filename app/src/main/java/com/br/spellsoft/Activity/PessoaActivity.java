@@ -16,22 +16,30 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.br.spellsoft.Entidades.Pessoa;
 import com.br.spellsoft.Entidades.Profissoes;
+import com.br.spellsoft.Entidades.Sexo;
+import com.br.spellsoft.Entidades.TipoPessoa;
 import com.br.spellsoft.Repository.DatePickerFragmant;
 import com.br.spellsoft.Util.Mask;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 public class PessoaActivity extends Activity {
 
     private Spinner spinnerProfissao;
-    private EditText txtCpf,txtDataNasc;
+    private EditText txtCpf,txtDataNasc,txtNome,txtEndereco;
     private RadioGroup rdgCpfCnpj;
     private RadioButton rdbCpf;
     private TextWatcher cpfMask,cnpjMask;
     private int cpfCnpjSelecionado;
     private TextView lblCpfCnpj;
+    private RadioGroup rdgSexo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,13 +47,15 @@ public class PessoaActivity extends Activity {
         spinnerProfissao = (Spinner)findViewById(R.id.spnProfissao);
         txtCpf = (EditText) findViewById(R.id.txtCpfCnpj);
         txtDataNasc = (EditText) findViewById(R.id.txtDataNasc);
+        txtNome = (EditText) findViewById(R.id.txt_Nome);
+        txtEndereco  = (EditText)findViewById(R.id.txt_Endereco);
         rdgCpfCnpj = (RadioGroup) findViewById(R.id.rdgCpfCnpj);
         rdbCpf = (RadioButton) findViewById(R.id.rdbCpf);
         cpfMask = Mask.insert("###.###.###-##",txtCpf);
         txtCpf.addTextChangedListener(cpfMask);
         lblCpfCnpj = (TextView) findViewById(R.id.lblCpfCnpj);
         cnpjMask = Mask.insert("##.###.###/####-##",txtCpf );
-        //txtCpf.addTextChangedListener(cpfMask);
+        rdgSexo = (RadioGroup) findViewById(R.id.rdgSexo);
 
         rdgCpfCnpj.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -140,5 +150,30 @@ public class PessoaActivity extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+    private void PopularPesoa(){
+        Pessoa pessoa = new Pessoa();
+        pessoa.setNome(txtNome.getText().toString());
+        pessoa.setEndereco(txtEndereco.getText().toString());
+        pessoa.setCpfCnpj(txtCpf.getText().toString());
+        pessoa.setTipoPessoa(rdgCpfCnpj.getCheckedRadioButtonId()
+                == R.id.rdbCnpj ? TipoPessoa.JURIDICA : TipoPessoa.FISICA);
+        pessoa.setSexo(rdgSexo.getCheckedRadioButtonId()
+                == R.id.rdbMasculino ? Sexo.MASCULINO : Sexo.FEMININO);
+        Profissoes profissoes = Profissoes.GetProfissao(spinnerProfissao.getSelectedItemPosition());
+        pessoa.setProfissao(profissoes);
+        DateFormat dataDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        try {
+           Date nasc = dataDateFormat.parse(txtDataNasc.getText().toString());
+            pessoa.setDtNasc(nasc);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        Toast.makeText(this,pessoa.toString(),Toast.LENGTH_LONG).show();
+
+    }
+    public void btnEnviar_Click(View view){
+        PopularPesoa();
     }
 }
