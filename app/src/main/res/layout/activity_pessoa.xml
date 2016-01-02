@@ -107,20 +107,30 @@
             android:id="@+id/btnEnviar"
             android:text="Enviar"/>
 
-        <EditText
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/txtDataNasc"
-            android:inputType="date"
-            android:enabled="false"
-            android:gravity="center"
-            android:textSize="60dp"/>
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/btnDataNasc"
-            android:text="Data Nasc"
-            android:onClick="setData"/>
+            android:layout_height="wrap_content">
+            <Button
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnDataNasc"
+                android:text="Data Nasc"
+                android:onClick="setData"/>
+            <EditText
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/txtDataNasc"
+                android:inputType="date"
+                android:enabled="false"
+                android:gravity="center"
+                android:textSize="60dp"/>
+
+
+
+        </LinearLayout>
 
 
     </LinearLayout>
