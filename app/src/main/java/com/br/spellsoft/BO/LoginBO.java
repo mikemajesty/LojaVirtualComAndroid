@@ -17,7 +17,6 @@ public class LoginBO  {
 
     public LoginBO(Activity activity){
         loginRepository = new LoginRepository(activity);
-        loginRepository.ListarLogin(activity);
     }
     public static boolean validaCampoLogin(String login,String senha){
         return login == "" || "".equals(login) ? false : senha == "" || "".equals(senha)? false :true;

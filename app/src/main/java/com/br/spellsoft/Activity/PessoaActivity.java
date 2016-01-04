@@ -21,6 +21,7 @@ import com.br.spellsoft.Entidades.Profissoes;
 import com.br.spellsoft.Entidades.Sexo;
 import com.br.spellsoft.Entidades.TipoPessoa;
 import com.br.spellsoft.Repository.DatePickerFragmant;
+import com.br.spellsoft.Repository.PessoaRepository;
 import com.br.spellsoft.Util.Mask;
 
 import java.text.DateFormat;
@@ -40,10 +41,12 @@ public class PessoaActivity extends Activity {
     private int cpfCnpjSelecionado;
     private TextView lblCpfCnpj;
     private RadioGroup rdgSexo;
+    private PessoaRepository pessoaRepository;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pessoa);
+        pessoaRepository = new PessoaRepository(this);
         spinnerProfissao = (Spinner)findViewById(R.id.spnProfissao);
         txtCpf = (EditText) findViewById(R.id.txtCpfCnpj);
         txtDataNasc = (EditText) findViewById(R.id.txtDataNasc);
@@ -151,7 +154,7 @@ public class PessoaActivity extends Activity {
 
         return super.onOptionsItemSelected(item);
     }
-    private void PopularPesoa(){
+    private Pessoa  PopularPesoa(){
         Pessoa pessoa = new Pessoa();
         pessoa.setNome(txtNome.getText().toString());
         pessoa.setEndereco(txtEndereco.getText().toString());
@@ -170,10 +173,62 @@ public class PessoaActivity extends Activity {
             e.printStackTrace();
         }
 
-        Toast.makeText(this,pessoa.toString(),Toast.LENGTH_LONG).show();
+        return  pessoa;
 
     }
     public void btnEnviar_Click(View view){
-        PopularPesoa();
+      Pessoa pessoa =  PopularPesoa();
+        if (ValidarPessoa(pessoa) == false ){
+            pessoaRepository.SalvarPessoa(pessoa);
+        }
+
+    }
+    public  void SalvarPessoa(Pessoa pessoa){
+
+    }
+    private boolean ValidarPessoa(Pessoa pessoa){
+        boolean erro = false;
+        if(pessoa.getNome() == null ||  "".equals(pessoa.getNome())){
+            txtNome.setError("Campo obrigatório");
+            erro = true;
+        }
+        if(pessoa.getEndereco() == null ||  "".equals(pessoa.getEndereco())){
+            txtEndereco.setError("Campo obrigatório");
+            erro = true;
+        }
+        if(pessoa.getCpfCnpj() == null ||  "".equals(pessoa.getCpfCnpj())){
+            txtCpf.setError(rdgCpfCnpj.getCheckedRadioButtonId()
+                    == R.id.rdbCnpj ? "Campo CNPJ obrigatório" : "Campo CPF obrigatório");
+            erro = true;
+        }
+        else
+        {
+            switch (rdgCpfCnpj.getCheckedRadioButtonId()){
+                case R.id.rdbCpf:
+                    if (pessoa.getCpfCnpj().length() != 14)
+                    {
+                        erro = true;
+                        txtCpf.setError("Campo deve ter 11 caracteres");
+                    }
+                    break;
+                case R.id.rdbCnpj:
+                    if (pessoa.getCpfCnpj().length() != 18)
+                    {
+                        erro = true;
+                        txtCpf.setError("Campo deve ter 14 caracteres");
+                    }
+                    break;
+
+            }
+
+        }
+        if(pessoa.getDtNasc() == null || txtDataNasc.getText().equals("")){
+            txtDataNasc.setError("Campo obrigatório");
+            erro = true;
+        }
+        else {
+            txtDataNasc.setError(null);
+        }
+        return  erro    ;
     }
 }

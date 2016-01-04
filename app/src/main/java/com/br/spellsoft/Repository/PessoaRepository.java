@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.br.spellsoft.Entidades.Pessoa;
 import com.br.spellsoft.Util.Constantes;
 
 /**
@@ -32,6 +33,10 @@ public class PessoaRepository extends SQLiteOpenHelper {
                 .append("PROFISSAO INTEGER(3) NOT NULL,")
                 .append("DT_NASC INTEGER NOT NULL)");
         db.execSQL(query.toString());
+
+    }
+
+    public void SalvarPessoa(Pessoa pessoa) {
 
     }
 }
