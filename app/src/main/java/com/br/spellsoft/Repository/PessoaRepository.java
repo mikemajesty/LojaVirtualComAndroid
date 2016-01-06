@@ -1,10 +1,12 @@
 package com.br.spellsoft.Repository;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.br.spellsoft.Entidades.Pessoa;
+import com.br.spellsoft.Entidades.TipoPessoa;
 import com.br.spellsoft.Util.Constantes;
 
 /**
@@ -23,20 +25,27 @@ public class PessoaRepository extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         StringBuilder query = new StringBuilder()
-                .append("CREATE TABLE TB_PESSOA")
+                .append("CREATE TABLE IF NOT EXISTS TB_PESSOA")
                 .append("(ID_PESSOA INTEGER PRIMARY KEY AUTOINCREMENT,")
                 .append("NOME TEXT(30) NOT NULL,")
                 .append("ENDERECO TEXT(50),")
                 .append("CPF TEXT(14),")
-                .append("CNPJ TEXT(14),")
+                .append("CNPJ TEXT(18),")
                 .append("SEXO INTEGER(1) NOT NULL,")
                 .append("PROFISSAO INTEGER(3) NOT NULL,")
                 .append("DT_NASC INTEGER NOT NULL)");
         db.execSQL(query.toString());
-
     }
 
     public void SalvarPessoa(Pessoa pessoa) {
-
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("NOME", pessoa.getNome());
+        contentValues.put("ENDERECO",pessoa.getEndereco());
+        contentValues.put(pessoa.getTipoPessoa() == TipoPessoa.FISICA ? "CPF":"CNPJ",pessoa.getCpfCnpj());
+        contentValues.put("SEXO",pessoa.getSexo().ordinal());
+        contentValues.put("PROFISSAO",pessoa.getProfissao().ordinal());
+        contentValues.put("DT_NASC", pessoa.getDtNasc().getTime());
+        long result = db.insert("TB_PESSOA", null, contentValues);
     }
 }

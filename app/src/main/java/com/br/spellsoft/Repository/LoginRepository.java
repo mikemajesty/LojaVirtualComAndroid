@@ -23,18 +23,22 @@ public class LoginRepository extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-         StringBuilder query = new StringBuilder()
-        .append("CREATE TABLE TB_LOGIN")
-        .append("(ID_LOGIN INTEGER PRIMARY KEY AUTOINCREMENT,")
-        .append("USUARIO TEXT(15) NOT NULL,")
-        .append("SENHA TEXT(15) NOT NULL)");
+
+
+        StringBuilder query = new StringBuilder()
+                .append("CREATE  TABLE IF NOT EXISTS TB_LOGIN")
+                .append("(ID_LOGIN INTEGER PRIMARY KEY AUTOINCREMENT,")
+                .append("USUARIO TEXT(15) NOT NULL,")
+                .append("SENHA TEXT(15) NOT NULL)");
          db.execSQL(query.toString());
 
          PopularDB(db);
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {}
+    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
+        onCreate(sqLiteDatabase);
+    }
     private void PopularDB(SQLiteDatabase db){
         StringBuilder query = new StringBuilder()
                 .append("INSERT INTO TB_LOGIN(USUARIO,SENHA) VALUES(?,?)");
