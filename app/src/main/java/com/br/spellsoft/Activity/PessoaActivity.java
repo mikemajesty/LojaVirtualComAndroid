@@ -2,6 +2,7 @@ package com.br.spellsoft.Activity;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextWatcher;
 import android.view.Menu;
@@ -23,7 +24,7 @@ import com.br.spellsoft.Entidades.TipoPessoa;
 import com.br.spellsoft.Repository.DatePickerFragmant;
 import com.br.spellsoft.Repository.PessoaRepository;
 import com.br.spellsoft.Util.Mask;
-
+import  com.br.spellsoft.Activity.ListaPessoaActivity;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -180,6 +181,8 @@ public class PessoaActivity extends Activity {
       Pessoa pessoa =  PopularPesoa();
         if (ValidarPessoa(pessoa) == false ){
             pessoaRepository.SalvarPessoa(pessoa);
+            startActivity(new Intent(this,ListaPessoaActivity.class));
+            finish();
         }
 
     }

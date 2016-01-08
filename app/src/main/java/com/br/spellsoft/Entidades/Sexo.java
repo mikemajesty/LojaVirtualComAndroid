@@ -5,5 +5,14 @@ package com.br.spellsoft.Entidades;
  */
 public enum Sexo {
     FEMININO,
-    MASCULINO
+    MASCULINO;
+
+
+    public static Sexo GetSexo(int pos) {
+        for (Sexo sex :Sexo.values()){
+            if (sex.ordinal() == pos)
+                return sex;
+        }
+        return  null;
+    }
 }

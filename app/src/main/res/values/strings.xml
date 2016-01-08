@@ -12,4 +12,5 @@
     /*------------Tela de Menu---------------------*/
     <string name="lbl_Sair">Sair</string>
     <string name="title_activity_pessoa">Pessoa Activity</string>
+    <string name="title_activity_lista_pessoa">ListaPessoaActivity</string>
 </resources>
