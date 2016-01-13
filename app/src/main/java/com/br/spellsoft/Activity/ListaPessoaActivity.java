@@ -1,9 +1,11 @@
 package com.br.spellsoft.Activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -23,6 +25,11 @@ public class ListaPessoaActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_pessoa);
 
+        this.getActionBar().setTitle("Lista de Pessoa");
+        this.getActionBar().setDisplayHomeAsUpEnabled(true);
+        this.getActionBar().setHomeButtonEnabled(true);
+
+
         lstPessoa = (ListView) findViewById(R.id.lstPessoa);
         pessoaRepository = new PessoaRepository(this);
 
@@ -35,6 +42,10 @@ public class ListaPessoaActivity extends Activity {
         ArrayAdapter arrayAdapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1,valores);
         //arrayAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         lstPessoa.setAdapter(arrayAdapter);
+    }
+    public void btnAddPessoa_Click(View view){
+        startActivity(new Intent(this,PessoaActivity.class));
+        finish();
     }
 
     @Override
@@ -51,10 +62,11 @@ public class ListaPessoaActivity extends Activity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+      switch (id){
+          case android.R.id.home:
+              finish();
+              break;
+      }
 
         return super.onOptionsItemSelected(item);
     }
