@@ -68,11 +68,11 @@ public class PessoaRepository extends SQLiteOpenHelper {
             pessoa.setEndereco(cursor.getString(cursor.getColumnIndex("ENDERECO")));
             pessoa.setTipoPessoa(cursor.getString(cursor.getColumnIndex("CPF"))
                     != "" ? TipoPessoa.FISICA : TipoPessoa.JURIDICA);
-            pessoa.setCpfCnpj(cursor.getString(cursor.getColumnIndex("CPF")) != "" ? cursor.getString(cursor.getColumnIndex("CPF")) :
+            pessoa.setCpfCnpj(cursor.getString(cursor.getColumnIndex("CPF")) != null ? cursor.getString(cursor.getColumnIndex("CPF")) :
                     cursor.getString(cursor.getColumnIndex("CNPJ")));
             pessoa.setSexo(Sexo.GetSexo(cursor.getInt(cursor.getColumnIndex("SEXO"))));
             pessoa.setProfissao(Profissoes.GetProfissao(cursor.getInt(cursor.getColumnIndex("PROFISSAO"))));
-            int time = cursor.getInt(cursor.getColumnIndex("DT_NASC"));
+            long time = cursor.getLong(cursor.getColumnIndex("DT_NASC"));
             Date dtNasc = new Date();
             dtNasc.setTime(time);
             pessoa.setDtNasc(dtNasc);

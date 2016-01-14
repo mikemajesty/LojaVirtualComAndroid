@@ -6,13 +6,17 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.br.spellsoft.Activity.R;
 import com.br.spellsoft.Entidades.Pessoa;
 import com.br.spellsoft.Repository.PessoaRepository;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +24,7 @@ public class ListaPessoaActivity extends Activity {
 
     private ListView lstPessoa;
     private PessoaRepository pessoaRepository;
+    private List<Pessoa> listPessoas;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,16 +38,36 @@ public class ListaPessoaActivity extends Activity {
         lstPessoa = (ListView) findViewById(R.id.lstPessoa);
         pessoaRepository = new PessoaRepository(this);
 
-        List<Pessoa> list = pessoaRepository.ListarPessoa();
+        listPessoas = pessoaRepository.ListarPessoa();
         List<String> valores = new ArrayList<String>();
-        for (Pessoa pessoa: list)
+        for (Pessoa pessoa: listPessoas)
         {
             valores.add(pessoa.getNome());
         }
         ArrayAdapter arrayAdapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1,valores);
         //arrayAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         lstPessoa.setAdapter(arrayAdapter);
+        lstPessoa.setOnItemClickListener(clickListenerPessoas);
     }
+    private AdapterView.OnItemClickListener clickListenerPessoas = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+
+          Pessoa pessoa =   listPessoas.get(position);
+
+            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+
+          StringBuilder info = new StringBuilder().append("Nome: "+pessoa.getNome() )
+                  .append("\nEndereço: "+pessoa.getEndereco())
+                  .append("\nCpf:Cnpj: "+pessoa.getCpfCnpj())
+                  .append("\nSexo: "+pessoa.getSexo().getDescricao())
+                  .append("\nPorfissão:" + pessoa.getProfissao().getDescricao())
+                  .append("\nDt_Nasc:" +dateFormat.format(pessoa.getDtNasc()));
+
+            Toast.makeText(ListaPessoaActivity.this,info,Toast.LENGTH_LONG).show();
+        }
+    };
+
     public void btnAddPessoa_Click(View view){
         startActivity(new Intent(this,PessoaActivity.class));
         finish();

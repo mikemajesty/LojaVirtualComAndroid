@@ -118,7 +118,7 @@ public class PessoaActivity extends Activity {
         DatePickerFragmant datePickerFragmant = new DatePickerFragmant();
         Bundle bundle  = new Bundle();
         Calendar c = Calendar.getInstance();
-        bundle.putInt("Mia",c.get(Calendar.DAY_OF_MONTH));
+        bundle.putInt("Dia",c.get(Calendar.DAY_OF_MONTH));
         bundle.putInt("Mes",c.get(Calendar.MONTH));
         bundle.putInt("Ano",c.get(Calendar.YEAR));
         datePickerFragmant.setArguments(bundle);
@@ -129,8 +129,8 @@ public class PessoaActivity extends Activity {
 
     private DatePickerDialog.OnDateSetListener dateListener = new DatePickerDialog.OnDateSetListener() {
         @Override
-        public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-            txtDataNasc.setText(i+"/"+(i1+1)+"/"+i2);
+        public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+            txtDataNasc.setText(day+"/"+(month+1)+"/"+year);
 
         }
 
