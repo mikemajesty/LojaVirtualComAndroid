@@ -3,6 +3,8 @@ package com.br.spellsoft.Activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,6 +27,7 @@ public class ListaPessoaActivity extends Activity {
     private ListView lstPessoa;
     private PessoaRepository pessoaRepository;
     private List<Pessoa> listPessoas;
+    private int posicaoSelecionada = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,12 +51,47 @@ public class ListaPessoaActivity extends Activity {
         //arrayAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         lstPessoa.setAdapter(arrayAdapter);
         lstPessoa.setOnItemClickListener(clickListenerPessoas);
+
+        lstPessoa.setOnCreateContextMenuListener(contextMenuItem);
+        lstPessoa.setOnItemLongClickListener(clickLongItem);
     }
+
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case 10:
+                Toast.makeText(ListaPessoaActivity.this,"Editar "+listPessoas.get(posicaoSelecionada).getNome(),Toast.LENGTH_LONG).show();
+            break;
+            case 20:
+                Toast.makeText(ListaPessoaActivity.this,"Deletar "+listPessoas.get(posicaoSelecionada).getNome(),Toast.LENGTH_LONG).show();
+                break;
+        }
+        return super.onContextItemSelected(item);
+    }
+    /*Pega a posição do click long em um menu*/
+ private  AdapterView.OnItemLongClickListener clickLongItem = new AdapterView.OnItemLongClickListener() {
+     @Override
+     public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
+         posicaoSelecionada =  position;
+       return  false;
+     }
+ };
+    /*Cria o menu de context*/
+    private View.OnCreateContextMenuListener contextMenuItem = new View.OnCreateContextMenuListener() {
+        @Override
+        public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
+              /*Group,id,posicao*/
+            contextMenu.add(1,10,1,"Editar");
+            contextMenu.add(1,20,2,"Deletar");
+        }
+    };
+    /*metodo executado apos o click em um listview*/
     private AdapterView.OnItemClickListener clickListenerPessoas = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
 
-          Pessoa pessoa =   listPessoas.get(position);
+          Pessoa pessoa =  pessoaRepository.ConsultarPessoaPorID(listPessoas.get(position).getId()) ;
 
             DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
@@ -95,4 +133,6 @@ public class ListaPessoaActivity extends Activity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
 }

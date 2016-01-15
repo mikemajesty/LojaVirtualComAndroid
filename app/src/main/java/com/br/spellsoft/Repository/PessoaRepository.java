@@ -81,5 +81,26 @@ public class PessoaRepository extends SQLiteOpenHelper {
         }
         return listar;
     }
+    public Pessoa ConsultarPessoaPorID(int id){
+        Pessoa pessoa = new Pessoa();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query("TB_PESSOA", null, "ID_PESSOA=?", new String[]{String.valueOf(id)}, null, null, "NOME");
+        if (cursor.moveToNext()){
+            pessoa.setId(cursor.getInt(cursor.getColumnIndex("ID_PESSOA")));
+            pessoa.setNome(cursor.getString(cursor.getColumnIndex("NOME")));
+            pessoa.setEndereco(cursor.getString(cursor.getColumnIndex("ENDERECO")));
+            pessoa.setTipoPessoa(cursor.getString(cursor.getColumnIndex("CPF"))
+                    != "" ? TipoPessoa.FISICA : TipoPessoa.JURIDICA);
+            pessoa.setCpfCnpj(cursor.getString(cursor.getColumnIndex("CPF")) != null ? cursor.getString(cursor.getColumnIndex("CPF")) :
+                    cursor.getString(cursor.getColumnIndex("CNPJ")));
+            pessoa.setSexo(Sexo.GetSexo(cursor.getInt(cursor.getColumnIndex("SEXO"))));
+            pessoa.setProfissao(Profissoes.GetProfissao(cursor.getInt(cursor.getColumnIndex("PROFISSAO"))));
+            long time = cursor.getLong(cursor.getColumnIndex("DT_NASC"));
+            Date dtNasc = new Date();
+            dtNasc.setTime(time);
+            pessoa.setDtNasc(dtNasc);
+        }
+        return pessoa;
+    }
 
 }
