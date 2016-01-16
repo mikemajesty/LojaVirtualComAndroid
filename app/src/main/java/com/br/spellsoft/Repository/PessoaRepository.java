@@ -102,5 +102,10 @@ public class PessoaRepository extends SQLiteOpenHelper {
         }
         return pessoa;
     }
+    public boolean RemovePessoaPorID(int id){
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.delete("TB_PESSOA","ID_PESSOA=?",new String[]{String.valueOf(id)}) > 0;
+
+    }
 
 }

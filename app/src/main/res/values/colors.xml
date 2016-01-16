@@ -2,4 +2,9 @@
 <resources>
         <item name="gray" type="color">#ff8b848f</item>
     <item name="black" type="color">#ff0a090a</item>
+    <item name="branco" type="color">#FFFF</item>
+    <item name="primary_alert" type="color">#fffff73b</item>
+    <item name="primary_error" type="color">#FF0000</item>
+    <item name="primary_sucesso" type="color">#ff6fff25</item>
+    <item name="primary_info" type="color">#ffffc610</item>
 </resources>

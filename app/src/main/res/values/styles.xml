@@ -41,4 +41,26 @@
         <item name="android:layout_gravity">center_vertical</item>
 
     </style>
+    <style name="Edt_Estilo">
+        <item name="android:textSize">@dimen/texto_padrao</item>
+        <item name="android:layout_marginBottom">@dimen/margin_widgets</item>
+    </style>
+    <style name="AppTheme.Dark.Dialog.Sucesso" parent="android:TextAppearance.Material.Notification.Info">
+        <item name="android:colorAccent">@color/branco</item>
+        <item name="android:textColorPrimary">@color/branco</item>
+        <item name="android:background">@color/primary_sucesso</item>
+    </style>
+    <style name="AppTheme.Dark.Dialog.Info" parent="android:TextAppearance.Material.Notification.Info">
+        <item name="android:colorAccent">@color/branco</item>
+        <item name="android:background">@color/primary_info</item>
+    </style><style name="AppTheme.Dark.Dialog.Error" parent="android:TextAppearance.Material.Notification.Info">
+    <item name="android:colorAccent">@color/branco</item>
+    <item name="android:textColorPrimary">@color/branco</item>
+    <item name="android:background">@color/primary_error</item>
+    </style>
+    <style name="AppTheme.Dark.Dialog.Alert" parent="android:TextAppearance.Material.Notification.Info">
+        <item name="android:colorAccent">@color/branco</item>
+        <item name="android:textColorPrimary">@color/branco</item>
+        <item name="android:background">@color/primary_alert</item>
+    </style>
 </resources>

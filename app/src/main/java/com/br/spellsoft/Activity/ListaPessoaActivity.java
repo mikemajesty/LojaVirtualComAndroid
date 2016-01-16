@@ -1,8 +1,10 @@
 package com.br.spellsoft.Activity;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Message;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
@@ -15,7 +17,9 @@ import android.widget.Toast;
 
 import com.br.spellsoft.Activity.R;
 import com.br.spellsoft.Entidades.Pessoa;
+import com.br.spellsoft.Entidades.TipoMessage;
 import com.br.spellsoft.Repository.PessoaRepository;
+import com.br.spellsoft.Util.CustomMessage;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -41,13 +45,17 @@ public class ListaPessoaActivity extends Activity {
         lstPessoa = (ListView) findViewById(R.id.lstPessoa);
         pessoaRepository = new PessoaRepository(this);
 
+        CarregarLista();
+    }
+
+    private void CarregarLista() {
         listPessoas = pessoaRepository.ListarPessoa();
         List<String> valores = new ArrayList<String>();
         for (Pessoa pessoa: listPessoas)
         {
             valores.add(pessoa.getNome());
         }
-        ArrayAdapter arrayAdapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1,valores);
+        ArrayAdapter arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, valores);
         //arrayAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         lstPessoa.setAdapter(arrayAdapter);
         lstPessoa.setOnItemClickListener(clickListenerPessoas);
@@ -60,11 +68,20 @@ public class ListaPessoaActivity extends Activity {
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         switch (item.getItemId()){
-            case 10:
+            case 10:/*editar*/
                 Toast.makeText(ListaPessoaActivity.this,"Editar "+listPessoas.get(posicaoSelecionada).getNome(),Toast.LENGTH_LONG).show();
             break;
-            case 20:
-                Toast.makeText(ListaPessoaActivity.this,"Deletar "+listPessoas.get(posicaoSelecionada).getNome(),Toast.LENGTH_LONG).show();
+            case 20:/*Deletar*/
+                CustomMessage.showMsgConfirm(ListaPessoaActivity.this, "Deseja remover a pessoa?", "Remover pessoa", TipoMessage.ALERTA, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int which) {
+                        Pessoa pessoa =  pessoaRepository.ConsultarPessoaPorID(listPessoas.get(posicaoSelecionada).getId());
+                        pessoaRepository.RemovePessoaPorID(pessoa.getId());
+                        Toast.makeText(ListaPessoaActivity.this, "Pessoa:  " + listPessoas.get(posicaoSelecionada).getNome()+" Deletado com sucesso", Toast.LENGTH_LONG).show();
+                        CarregarLista();
+                    }
+                });
+
                 break;
         }
         return super.onContextItemSelected(item);
@@ -82,8 +99,8 @@ public class ListaPessoaActivity extends Activity {
         @Override
         public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
               /*Group,id,posicao*/
-            contextMenu.add(1,10,1,"Editar");
-            contextMenu.add(1,20,2,"Deletar");
+            contextMenu.add(1,10,1,"Editar").setIcon(R.drawable.edit).setTitle("Editar Pessoa");
+            contextMenu.add(1,20,2,"Deletar").setIcon(R.drawable.delete).setTitle("Deletar Pessoa");
         }
     };
     /*metodo executado apos o click em um listview*/
