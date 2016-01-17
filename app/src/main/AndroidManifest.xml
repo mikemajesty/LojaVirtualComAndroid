@@ -33,6 +33,10 @@
             android:name=".DashBoardActivity"
             android:label="@string/title_activity_dash_board" >
         </activity>
+        <activity
+            android:name=".EditarPessoaActivity"
+            android:label="@string/title_activity_editar_pessoa" >
+        </activity>
     </application>
 
 </manifest>

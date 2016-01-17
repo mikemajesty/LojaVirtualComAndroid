@@ -1,11 +1,12 @@
 package com.br.spellsoft.Entidades;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by mike on 02/01/16.
  */
-public class Pessoa {
+public class Pessoa  implements Serializable{
     private int id;
     private String nome;
     private String endereco;

@@ -69,7 +69,10 @@ public class ListaPessoaActivity extends Activity {
     public boolean onContextItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case 10:/*editar*/
-                Toast.makeText(ListaPessoaActivity.this,"Editar "+listPessoas.get(posicaoSelecionada).getNome(),Toast.LENGTH_LONG).show();
+                Pessoa pessoa =  pessoaRepository.ConsultarPessoaPorID(listPessoas.get(posicaoSelecionada).getId());
+                startActivity(new Intent(this,EditarPessoaActivity.class)
+                .putExtra("pessoa",pessoa));
+                finish();
             break;
             case 20:/*Deletar*/
                 CustomMessage.showMsgConfirm(ListaPessoaActivity.this, "Deseja remover a pessoa?", "Remover pessoa", TipoMessage.ALERTA, new DialogInterface.OnClickListener() {

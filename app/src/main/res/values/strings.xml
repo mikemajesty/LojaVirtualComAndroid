@@ -14,4 +14,5 @@
     <string name="title_activity_pessoa">Pessoa Activity</string>
     <string name="title_activity_lista_pessoa">ListaPessoaActivity</string>
     <string name="title_activity_dash_board">DashBoardActivity</string>
+    <string name="title_activity_editar_pessoa">EditarPessoaActivity</string>
 </resources>
